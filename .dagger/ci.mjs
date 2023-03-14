@@ -11,7 +11,7 @@ connect(async (client) => {
   // at /src in the container
   // mount the cache volume to persist dependencies
   const source = client.container()
-    .from("node:16-slim")
+    .from("node:19")
     .withMountedDirectory('/src', client.host().directory('../', { exclude: ["node_modules/", "ci/"] }))
     .withMountedCache("/src/node_modules", nodeCache)
 
@@ -23,22 +23,23 @@ connect(async (client) => {
 
   // run application tests
   const test = runner
-    .withExec(["npm", "test", "--", "--watchAll=false"])
+    .withExec(["npm", "run", "test"])
 
   // first stage
   // build application
   const buildDir = test
-    .withExec(["npm", "run", "build"])
+    .withExec(["npm", "run", "compile"])
     .directory("./build")
 
   // second stage
-  // use an nginx:alpine container
+  // use an node:19-alpine container
   // copy the build/ directory from the first stage
   // publish the resulting container to a registry
   const imageRef = await client.container()
-    .from("nginx:1.23-alpine")
-    .withDirectory('/usr/share/nginx/html', buildDir)
-    .publish('ttl.sh/hello-dagger-' + Math.floor(Math.random() * 10000000))
+    .from("node:19-alpine")
+    .withDirectory('/app', buildDir)
+    .publish(`${process.env['DOCKER_USERNAME']}/${process.env['DOCKER_IMAGE']}:${Math.random().toString(36).substring(2, 15)}`)
+
   console.log(`Published image to: ${imageRef}`)
 
 }, { LogOutput: process.stdout })
