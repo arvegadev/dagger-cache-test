@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
   pull_request:
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -39,7 +39,7 @@ jobs:
         DOCKER_IMAGE: ${{ secrets.DOCKER_IMAGE }}
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      run: node ./dagger/ci.mjs
+      run: ./node_modules/.bin/ts-node .dagger/ci.mjs
 
     - name: Save Cache Node Modules
       uses: actions/cache/save@v3
