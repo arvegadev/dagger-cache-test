@@ -3,10 +3,7 @@ import { connect } from "@dagger.io/dagger"
 
 connect(async (client) => {
 
-  // create a cache volume
-  const nodeCache = client.cacheVolume("node")
-
-  // use a node:16-slim container
+  // use a node:19-slim container
   // mount the source code directory on the host
   // at /src in the container
   const source = client.container()
