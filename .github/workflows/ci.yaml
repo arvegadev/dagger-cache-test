@@ -1,32 +1,28 @@
-name: Node.js CI
+name: CI
 
 on:
   push:
     branches: [ main ]
   pull_request:
-
+  
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Setup Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
         node-version: 19
 
-    - name: Cache node_modules
-      uses: actions/cache@v2
-      id: cache-node-modules
+    - name: Restore cache node modules
+      id: cache-primes-restore
+      uses: actions/cache/restore@v3
       with:
-        path: |
-          node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
+        path: node_modules
+        key: ${{ hashFiles('**/package-lock.json') }}
 
     - name: Install dependencies
       if: steps.cache-node-modules.outputs.cache-hit != 'true'
@@ -44,3 +40,9 @@ jobs:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: node ./dagger/ci.mjs
+
+    - name: Save Cache Node Modules
+      uses: actions/cache/save@v3
+      with:
+        path: node_modules
+        key: ${{ hashFiles('**/package-lock.json') }}
