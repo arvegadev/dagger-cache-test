@@ -9,11 +9,9 @@ connect(async (client) => {
   // use a node:16-slim container
   // mount the source code directory on the host
   // at /src in the container
-  // mount the cache volume to persist dependencies
   const source = client.container()
     .from("node:19")
-    .withMountedDirectory('/src', client.host().directory('..', { exclude: ["node_modules/", "ci/"] }))
-    .withMountedCache("/src/node_modules", nodeCache)
+    .withMountedDirectory('/src', client.host().directory('.'))
 
   // set the working directory in the container
   // install application dependencies
