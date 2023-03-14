@@ -1,0 +1,31 @@
+{
+  "name": "dagger-cache-test",
+  "version": "1.0.0",
+  "description": "Just an example app",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "lint": "gts lint src/*",
+    "clean": "gts clean",
+    "compile": "ncc build src/app.ts -o dist",
+    "fix": "gts fix"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/jest": "^29.4.1",
+    "@types/node": "^14.11.2",
+    "@types/supertest": "^2.0.12",
+    "@vercel/ncc": "^0.36.1",
+    "gts": "^3.1.1",
+    "jest": "^29.5.0",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.0.5",
+    "ts-node": "^10.9.1",
+    "typescript": "~4.7.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
