@@ -1,6 +1,6 @@
-import Client, { connect } from "@dagger.io/dagger"
+import { connect } from "@dagger.io/dagger"
 
-connect(async (client: Client) => {
+connect(async (client) => {
 
   // use a node:19 container
   // mount the source code directory on the host
