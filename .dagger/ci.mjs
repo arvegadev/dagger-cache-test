@@ -23,7 +23,7 @@ connect(async (client) => {
   // build application
   const buildDir = test
     .withExec(["npm", "run", "compile"])
-    .directory("./build")
+    .directory("./dist")
 
   // second stage
   // use an node:19-alpine container
