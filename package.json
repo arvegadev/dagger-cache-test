@@ -4,6 +4,7 @@
   "description": "Just an example app",
   "main": "index.js",
   "scripts": {
+    "ci": "ts-node .dagger/ci.mjs",
     "test": "jest",
     "lint": "gts lint src/*",
     "clean": "gts clean",
