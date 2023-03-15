@@ -25,15 +25,25 @@ connect(async (client) => {
     .withExec(["npm", "run", "compile"])
     .directory("./dist")
 
-  // second stage
-  // use an node:19-alpine container
-  // copy the build/ directory from the first stage
-  // publish the resulting container to a registry
-  const imageRef = await client.container()
+  if(process.env['RUNNING_ON_PIPELINE']){
+
+    // second stage
+    // use an node:19-alpine container
+    // copy the build/ directory from the first stage
+    // publish the resulting container to a registry
+    const imageRef = await client.container()
     .from("node:19-alpine")
     .withDirectory('/app', buildDir)
-    .publish(`${process.env['DOCKER_USERNAME']}/${process.env['DOCKER_IMAGE']}:${Math.random().toString(36).substring(2, 15)}`)
+    .publish(`${process.env['DOCKER_USERNAME']}/${process.env['DOCKER_IMAGE']}:latest`)
 
-  console.log(`Published image to: ${imageRef}`)
+    console.log(`☁️ Published image to: ${imageRef}`)
+
+  } else {
+
+    console.log("💻 Running locally, skipping publish step...")
+
+    await test.stdout()
+
+  }
 
 }, { LogOutput: process.stdout })
