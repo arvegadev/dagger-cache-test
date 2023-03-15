@@ -40,7 +40,7 @@ jobs:
         DOCKER_IMAGE: ${{ secrets.DOCKER_IMAGE }}
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        RUNNING_ON_PIPELINE: true
+        PUBLISH: true
       run: ./node_modules/.bin/ts-node .dagger/ci.mjs
 
     - name: Save Cache Node Modules

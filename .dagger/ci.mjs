@@ -25,7 +25,9 @@ connect(async (client) => {
     .withExec(["npm", "run", "compile"])
     .directory("./dist")
 
-  if(process.env['RUNNING_ON_PIPELINE']){
+  if(process.env['PUBLISH']){
+
+    console.log("🚀 Starting steps before publish the image.")
 
     // second stage
     // use an node:19-alpine container
@@ -40,9 +42,11 @@ connect(async (client) => {
 
   } else {
 
-    console.log("💻 Running locally, skipping publish step...")
+    console.log("💻 Skipping publish, this is a local build ci job.")
 
     await test.stdout()
+
+    console.log("🎉 CI job finished successfully!")
 
   }
 
