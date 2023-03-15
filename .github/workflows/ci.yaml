@@ -39,7 +39,7 @@ jobs:
         DOCKER_IMAGE: ${{ secrets.DOCKER_IMAGE }}
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      run: ./node_modules/.bin/ts-node .dagger/ci.ts
+      run: ./node_modules/.bin/ts-node .dagger/ci.mts
 
     - name: Save Cache Node Modules
       uses: actions/cache/save@v3
